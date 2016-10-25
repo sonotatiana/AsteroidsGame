@@ -1,15 +1,75 @@
-//your variable declarations here
+
+SpaceShip babySpaceShip = new SpaceShip();
+
 public void setup() 
 {
-  //your code here
+  size(500,500);
 }
 public void draw() 
 {
-  //your code here
+    babySpaceShip.show();
+    babySpaceShip.setX(250);
+    babySpaceShip.setY(250);
+    babySpaceShip.setDirectionX(3);
+    babySpaceShip.setDirectionY(2);
+    babySpaceShip.setPointDirection(10);
+    babySpaceShip.accelerate(.1);
 }
-class SpaceShip //extends Floater  
+
+class SpaceShip extends Floater  
 {   
-    //your code here
+   public SpaceShip()
+   {
+      corners = 6;
+      xCorners = new int [corners];
+      yCorners = new int [corners];
+      xCorners[0] = -3;
+      yCorners[0] = -7;
+      xCorners[1] = -3;
+      yCorners[1] = -1;
+      xCorners[2] = -1;
+      yCorners[2] = 0;
+      xCorners[3] = -3;
+      yCorners[3] = 1;
+      xCorners[4] = -3;
+      yCorners[4] = 7;
+      xCorners[5] = 4;
+      yCorners[5] = 0;
+      myColor = color(0,0,0);
+   }
+   
+   public void setX(int x){myCenterX = x;}
+   public int getX(){return (int)myCenterX;}
+   public void setY(int y){myCenterY = y;}
+   public int getY(){return (int)myCenterY;}
+   public void setDirectionX(double x){myDirectionX = x;}
+   public double getDirectionX(){return (double)myDirectionX;}
+   public void setDirectionY(double y){myDirectionY = y;}
+   public double getDirectionY(){return (double)myDirectionY;}
+   public void setPointDirection(int degrees){myPointDirection =degrees;}
+   public double getPointDirection(){return (int)myPointDirection;}
+   }
+
+public void keyPressed(){
+  if(key == RIGHT)
+  {
+    babySpaceShip.rotate()+=5;
+  }   
+  else if(key == LEFT)
+  {
+    babySpaceShip.rotate()-=5;
+  }
+  else if(key == UP) //acceleration
+  {
+    babySpaceShip.accelerate();
+  }
+  else //hyperspace
+  {
+     babySpaceShip.setY(Math.random() *500);
+     babySpaceShip.setX(Math.random() *500);
+  }
+
+
 }
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   

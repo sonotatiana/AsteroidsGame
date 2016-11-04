@@ -1,12 +1,21 @@
 SpaceShip babySpaceShip = new SpaceShip();
 Star [] shootingSky = new Star[150];
+Asteroids [] bob = new Asteroids[10];
+
 public void setup() 
 {
   size(500,500);
+  
   for(int i = 0; i<shootingSky.length; i++)
   {
     shootingSky[i] = new Star();
   }
+  
+  for(int i = 0; i<bob.length; i++)
+  {
+    bob[i] = new Asteroids();
+  }
+
 }
 
 public void draw() 
@@ -14,11 +23,17 @@ public void draw()
     background(7,58,91);
     babySpaceShip.show();
     babySpaceShip.move();
+    
     for(int i = 0;i<shootingSky.length; i++)
     {
       shootingSky[i].show();
     }
-
+    
+    for(int i =0; i<bob.length; i++)
+    {
+      bob[i].show();
+      bob[i].move();
+    }
 }
 
 public void keyPressed()
@@ -48,6 +63,7 @@ public void keyPressed()
 class Star
 {
   private int starX, starY,starSize;
+  
   public Star()
   {
     starX = (int)(Math.random()*500);
@@ -60,6 +76,7 @@ class Star
     ellipse(starX,starY,starSize,starSize);
   }
 }
+
 class SpaceShip extends Floater  
 {   
    public SpaceShip()
@@ -90,12 +107,16 @@ class SpaceShip extends Floater
    
    public void setX(int x){myCenterX = x;}
    public int getX(){return (int)myCenterX;}
+
    public void setY(int y){myCenterY = y;}
    public int getY(){return (int)myCenterY;}
+
    public void setDirectionX(double x){myDirectionX = x;}
    public double getDirectionX(){return (double)myDirectionX;}
+
    public void setDirectionY(double y){myDirectionY = y;}
    public double getDirectionY(){return (double)myDirectionY;}
+
    public void setPointDirection(int degrees){myPointDirection =degrees;}
    public double getPointDirection(){return (int)myPointDirection;}
 }

@@ -1,6 +1,6 @@
 SpaceShip babySpaceShip = new SpaceShip();
 Star [] shootingSky = new Star[150];
-Asteroids [] bob = new Asteroids[10];
+ArrayList <Asteroids> asteroidList; 
 
 public void setup() 
 {
@@ -11,10 +11,12 @@ public void setup()
     shootingSky[i] = new Star();
   }
   
-  for(int i = 0; i<bob.length; i++)
-  {
-    bob[i] = new Asteroids();
-  }
+  asteroidList = new ArrayList <Asteroids>();
+  
+  for(int i = 0; i<10; i++)
+    {
+      asteroidList.add(i, new Asteroids());
+    }  
 
 }
 
@@ -28,12 +30,18 @@ public void draw()
     {
       shootingSky[i].show();
     }
-    
-    for(int i =0; i<bob.length; i++)
+
+    for(int i = 0; i<asteroidList.size();i++)
     {
-      bob[i].show();
-      bob[i].move();
+      asteroidList.get(i).show();
+      asteroidList.get(i).move();
+       if (dist((int)asteroidList.get(i).getX(), (int)asteroidList.get(i).getY(), (int)babySpaceShip.getX(), (int)babySpaceShip.getY()) <20)
+      {
+      asteroidList.remove(i);
+      } 
     }
+
+
 }
 
 public void keyPressed()
@@ -119,6 +127,7 @@ class SpaceShip extends Floater
 
    public void setPointDirection(int degrees){myPointDirection =degrees;}
    public double getPointDirection(){return (int)myPointDirection;}
+   
 }
 
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 

@@ -1,7 +1,6 @@
 SpaceShip babySpaceShip = new SpaceShip();
 Star [] shootingSky = new Star[150];
 ArrayList <Asteroids> asteroidList; 
-//Bullet balazo = new Bullet(babySpaceShip);
 ArrayList <Bullet> balazo;
 public void setup() 
 {
@@ -20,10 +19,6 @@ public void setup()
   }  
 
   balazo = new ArrayList <Bullet>();
-  for(int i = 0; i<100; i++)
-  {
-    balazo.add(i, new Bullet(babySpaceShip));
-  }
 }
 
 public void draw() 
@@ -42,22 +37,27 @@ public void draw()
       asteroidList.get(i).show();
       asteroidList.get(i).move();
 
-       if (dist((int)asteroidList.get(i).getX(), (int)asteroidList.get(i).getY(), (int)babySpaceShip.getX(), (int)babySpaceShip.getY()) <20)
+       if(dist((int)asteroidList.get(i).getX(), (int)asteroidList.get(i).getY(), (int)babySpaceShip.getX(), (int)babySpaceShip.getY()) <20)
       {
-      asteroidList.remove(i);
-      } 
-    }
-
+        asteroidList.remove(i);
+      }                                                
+    }  
+    
     for(int i = 0; i<balazo.size(); i++)
-    {
-      if(keyPressed && key == ' ')
       {
-      balazo.get(i).show();
-      balazo.get(i).move();
+        balazo.get(i).show();
+        balazo.get(i).move(); 
+        for(int j= 0; j< asteroidList.size(); j++)
+        {
+          if(dist((int)balazo.get(i).getX(),(int)balazo.get(i).getY(),(int)asteroidList.get(j).getX(), (int)asteroidList.get(j).getY())<5)
+          {
+            asteroidList.remove(j);
+            balazo.remove(i);
+            break;
+          }
+        }
       }
-    }
-
-
+  
 }
 
 public void keyPressed()
@@ -81,6 +81,10 @@ public void keyPressed()
      babySpaceShip.setX((int)(Math.random()*450));
      babySpaceShip.setY((int)(Math.random()*450));
      babySpaceShip.setPointDirection((int)(Math.random()*360));
+  }
+  else if(key == ' ')
+  {
+    balazo.add(new Bullet(babySpaceShip));
   }
 
 }
@@ -332,10 +336,11 @@ class Bullet extends Floater
   {
     myCenterX = theShip.getX();
     myCenterY = theShip.getY();
+    myPointDirection = theShip.getPointDirection();
     dRadians = myPointDirection*(Math.PI/180);
     myDirectionX = 5 * Math.cos(dRadians) + theShip.getDirectionX();
-    myDirectionY = 5 * Math.sin(dRadians) + theShip.getDirectionX();
-    myPointDirection = theShip.getPointDirection();
+    myDirectionY = 5 * Math.sin(dRadians) + theShip.getDirectionY();
+    
   }
   public void show()
   {
